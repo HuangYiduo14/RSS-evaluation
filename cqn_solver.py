@@ -3,8 +3,6 @@ from agv_simulator_no_deadlock import WarehouseMap, new_workstation_param, MAX_T
 from multiprocessing import Pool, cpu_count
 import pandas as pd
 
-exp_num_per_agv = 1
-
 def estimate_TH_cqn(num_AGV, setting='A',num_iter=100, input_flow_one_OD=0.0001,noflow=False,mg1=False,csv_name='temp.csv'):
     if noflow:
         num_iter =1
@@ -178,21 +176,18 @@ if __name__ == '__main__':
     max_agv_num = 22
     exp_num = 22
     agv_list = [max(1,int(max_agv_num*i/exp_num)) for i in range(1,exp_num+1)]
-    #agv_list = [4,5,6,7]
-    #agv_list = [22]
-    setting_list = ['A','B','C','D','E']
-
-    #setting_list = ['B','C','D','E']
-    #setting_list = ['A']
+    setting_list = ['A','B','C']
+    # do simulations
+    exp_num_per_agv = 100
     for setting in setting_list:
         print(setting)
         agv_list_setting = [(agv,setting) for agv in agv_list]
         results = []
         #results.append(return_TH(agv_list_setting[1]))
-        for agv_setting in agv_list_setting:
-            results.append(return_TH(agv_setting))
-        #with Pool(5) as p:
-        #   results = p.map(return_TH, agv_list_setting)
+        #for agv_setting in agv_list_setting:
+        #    results.append(return_TH(agv_setting))
+        with Pool(5) as p:
+           results = p.map(return_TH, agv_list_setting)
         #results.append(return_TH((2, 'C')))
         results = pd.DataFrame(results,columns=['simulation TH '+str(i) for i in range(exp_num_per_agv)]
                                                +['renewal process TH','M/G/1 TH','no congestion TH']
@@ -205,6 +200,27 @@ if __name__ == '__main__':
                                                +['block rate renewal','block rate mg1','block rate no cong']
                                                +['block rate sim'+str(i) for i in range(exp_num_per_agv)])
         results.to_csv(setting+'_compare_TH2.csv')
-# pre result: no cong: 0.0006784676317438963, with cong: 0.0006242526851921443, sim: 0.0006133333333333334
-# cong error: 1.78%
-# no-cong error: 10.6%
+    # do evaluations
+    exp_num_per_agv = 1
+    for setting in setting_list:
+        print(setting)
+        agv_list_setting = [(agv,setting) for agv in agv_list]
+        results = []
+        #results.append(return_TH(agv_list_setting[1]))
+        #for agv_setting in agv_list_setting:
+        #    results.append(return_TH(agv_setting))
+        with Pool(5) as p:
+           results = p.map(return_TH, agv_list_setting)
+        #results.append(return_TH((2, 'C')))
+        results = pd.DataFrame(results,columns=['simulation TH '+str(i) for i in range(exp_num_per_agv)]
+                                               +['renewal process TH','M/G/1 TH','no congestion TH']
+                                               +['simulation delay '+str(i) for i in range(exp_num_per_agv)]
+                                               +['delay renewal','delay mg1', 'delay no cong']
+                                               +['simulation speed '+str(i) for i in range(exp_num_per_agv)]
+                               +['deadlock sim'+str(i) for i in range(exp_num_per_agv)]
+                                               +['max rho renewal','max rho mg1', 'max rho no cong']
+                                               +['avg rho renewal','avg rho mg1', 'avg rho no cong']
+                                               +['block rate renewal','block rate mg1','block rate no cong']
+                                               +['block rate sim'+str(i) for i in range(exp_num_per_agv)])
+        results.to_csv(setting+'_compare_TH2.csv')
+        
