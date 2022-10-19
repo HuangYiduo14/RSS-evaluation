@@ -648,19 +648,6 @@ def new_workstation_param(setting='A'):
         allow_right_row = [1, 4, 7, 10, 13, 16, 19]
         m,n = 19,20
     elif setting=='B':
-        #workstation_blocks = [(5, 0)]
-        workstation_enter_blocks = [(6, 0)]
-        workstation_exit_blocks = [(7,0)]
-        noaccess_blocks = [(2 + 3 * i, 4 + 3 * j) for i in range(3) for j in range(5)]
-        dropoff_position = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        dropoff_blocks = [(block[0] + div[0], block[1] + div[1]) for block in noaccess_blocks for div in
-                          dropoff_position]
-        allow_up_col = [0, 2, 5, 8, 11, 14, 17]
-        allow_down_col = [1, 3, 6, 9, 12, 15, 18]
-        allow_left_row = [0, 3, 6, 9]
-        allow_right_row = [1, 4, 7, 10]
-        m,n = 19,11
-    elif setting=='C':
         #workstation_blocks = [(5, 0), (14, 0)]
         workstation_enter_blocks = [(6, 0), (12, 0)]
         workstation_exit_blocks = [(7, 0), (13, 0)]
@@ -673,20 +660,7 @@ def new_workstation_param(setting='A'):
         allow_left_row = [0, 3, 6, 9, 12, 15, 18]
         allow_right_row = [1, 4, 7, 10, 13, 16, 19]
         m, n = 13, 20
-    elif setting=='D':
-        workstation_enter_blocks = [(6, 0), (12, 0)]
-        workstation_exit_blocks = [(7, 0), (13, 0)]
-        noaccess_blocks = [(2 + 3 * i, 4 + 3 * j - 2) for i in range(6) for j in range(5)]
-        dropoff_position = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        dropoff_blocks = [(block[0] + div[0], block[1] + div[1]) for block in noaccess_blocks for div in
-                          dropoff_position]
-        allow_up_col = [2-2, 5-2, 8-2, 11-2, 14-2, 17-2]
-        allow_down_col = [3-2, 6-2, 9-2, 12-2, 15-2, 18-2]
-        allow_left_row = [0, 3, 6, 9, 12, 15, 18]
-        allow_right_row = [1, 4, 7, 10, 13, 16, 19]
-        m, n = 17, 20
-    elif setting=='E':
-        #workstation_blocks = [(2,0),(5, 0),(8,0),(11,0),(14, 0),(17,0)]
+    elif setting=='C':
         workstation_enter_blocks = [(3,0), (6, 0), (12, 0),(15,0)]
         workstation_exit_blocks = [(4,0), (7, 0), (13, 0),(16,0)]
         noaccess_blocks = [(2 + 3 * i, 4 + 3 * j) for i in range(6) for j in range(5)]
@@ -698,19 +672,6 @@ def new_workstation_param(setting='A'):
         allow_left_row = [0, 3, 6, 9, 12, 15, 18]
         allow_right_row = [1, 4, 7, 10, 13, 16, 19]
         m, n = 19, 20
-    elif setting == 'F':
-        #workstation_blocks = [(5, 0), (14, 0),(5,16),(14,16)]
-        workstation_enter_blocks = [(6, 0), (12, 0), (6,16), (12,16)]
-        workstation_exit_blocks = [(7, 0), (13, 0), (7,16), (13,16)]
-        noaccess_blocks = [(2 + 3 * i, 4 + 3 * j-2) for i in range(6) for j in range(5)]
-        dropoff_position = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        dropoff_blocks = [(block[0] + div[0], block[1] + div[1]) for block in noaccess_blocks for div in
-                          dropoff_position]
-        allow_up_col = [2 - 2, 5 - 2, 8 - 2, 11 - 2, 14 - 2, 17 - 2]
-        allow_down_col = [3 - 2, 6 - 2, 9 - 2, 12 - 2, 15 - 2, 18 - 2]
-        allow_left_row = [0, 3, 6, 9, 12, 15, 18]
-        allow_right_row = [1, 4, 7, 10, 13, 16, 19]
-        m, n = 17, 20
 
     return m,n,workstation_enter_blocks, workstation_exit_blocks, dropoff_blocks, noaccess_blocks, allow_up_col, allow_down_col, allow_left_row, allow_right_row
 
